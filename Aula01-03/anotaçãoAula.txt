@@ -1,0 +1,32 @@
+Sistemas Inteligentes
+
+Meta Estimadores
+ ➡️ São aqueles que usam modelos base para combina-los ou seleciona-los para melhorar em uma metrica de desempenho.
+ ➡️ Estimadores
+ y = x1B1 + x2B2 + ... + xnBn
+
+Sistemas Inteligentes
+ ➡️ Baseados no Conhecimento
+        ➡️ Lógica fora do código
+
+
+Programa
+ ➡️ Padronizado;          Base de Conhecimento
+ ➡️ Enxuto;         <->       de Máquina
+ 
+
+Fase 0
+➡️ Preparação dos Dados
+        Dados Historicos
+                ⬇
+
+Fase 1
+        Modulo de treinamento
+                ⬇
+        Base de Conhecimento -> Modelo (O que vamos treinar) ➡️ Saida(da fase 2)
+
+Fase 2 (Fase de Uso)
+                            ⬆
+        Sensores ➡️ Modulo de Inferência <-> Modulo de Explicação
+
+        Saida
