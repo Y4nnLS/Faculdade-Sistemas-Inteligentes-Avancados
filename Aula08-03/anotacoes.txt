@@ -1,0 +1,25 @@
+# NORMALIZAÇÃO DE DADOS
+
+08/03/2024
+x' =  (x - min) / (max - min)
+
+Fase 1: Pipeline de processamento para ML
+
+Dados Brutos(para treinamento)
+    ⬇️
+Pre processamento -> Normalização, limpeza, preenchimento, balanceamento
+    ⬇️
+treinamento
+    ⬇️
+Modelo de ML
+
+
+Fase 2: Pipeline de inferência
+
+Nova Instância(dado bruto)
+    ⬇️
+Pre processamento -> Normalização
+    ⬇️
+treinamento
+    ⬇️
+Modelo de ML
