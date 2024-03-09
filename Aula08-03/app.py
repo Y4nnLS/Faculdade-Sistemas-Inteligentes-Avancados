@@ -34,5 +34,32 @@ dump(modelo_normalizador, open('Aula08-03\\dados\\normalizador1.pkl', 'wb'))
 
 # Normalizar a base de dados de entrada
 dados_numericos_normalizados = modelo_normalizador.fit_transform(dados_numericos)
-print(dados_numericos)
+# print(dados_numericos)
+# print(dados_numericos_normalizados)
+
+# Converter os dados numericos normalizados em DataFrame
+dados_numericos_normalizados = pd.DataFrame(data = dados_numericos_normalizados, columns = ['idade', 'altura', 'peso'])
 print(dados_numericos_normalizados)
+
+# Juntar com os dados categoricos normalizados
+dados_normalizados_final = dados_numericos_normalizados.join(dados_categoricos_normalizados, how = 'left')
+print(dados_normalizados_final.head(10))
+
+
+### Está célula contem exemplos de abertura do modelo normalizador e de normalização de novas instancias
+### Foi elaborada como mero exemplo
+
+# Abrir o modelo normalizador
+from pickle import load
+modelo_normalizador = load(open('Aula08-03\dados\normalizador1.pkl', 'rb'))
+
+nova_instancia = [[13, 1, 98]]
+
+# Normalizar a nova instancia com o modelo salvo inicialmente
+nova_instancia_normalizada = modelo_normalizador.transform(nova_instancia)
+print(nova_instancia_normalizada)
+
+# Recompor os dados normalizados para uma representação legivel
+dados_legiveis = modelo_normalizador.inverse_transform(nova_instancia_normalizada)
+print(dados_legiveis)
+
