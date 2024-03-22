@@ -23,7 +23,7 @@ K = range(1, 101)
 # treinar iterativamente conforme n_clusters = K[i]
 for i in K:
     iris_kmeans_model = KMeans(n_clusters = i).fit(iris)
-    distortions.append(sum(np.mean(cdist(iris, iris_kmeans_model.cluster_centers_, 'euclidean'), axis = 1)/iris.shape[0]))
+    distortions.append(sum(np.min(cdist(iris, iris_kmeans_model.cluster_centers_, 'euclidean'), axis = 1)/iris.shape[0]))
 
 print(distortions)
 
@@ -34,3 +34,25 @@ ax.set(xlabel = 'n Clusters', ylabel = 'Distorção', title = 'Elbow pela distor
 ax.grid()
 fig.savefig('elbow_distorcao.png')
 plt.show()
+
+# Calcular o número ótimo de clusters
+x0 = K[0]
+y0 = distortions[0]
+xn = K[len(K) - 1]
+yn = distortions[len(distortions)-1]
+# Iterar nos pontos gerados durante os treinamentos preliminares
+distancias = []
+for i in range(len(distortions)):
+    x = K[i]
+    y = distortions[i]
+    numerador = abs((yn-y0)*x - (xn-x0)*y)
+    denominador = math.sqrt((yn-y0)**2)
+    distancias.append(numerador/denominador)
+
+# Maior distância
+n_clusters_otimo = K[distancias.index(np.max(distancias))]
+
+iris_kmeans_model = KMeans(n_clusters = n_clusters_otimo).fit(iris)
+
+from pickle import dump
+dump(iris_kmeans_model, open("C:\\Users\\yann_\\OneDrive\\Documentos\\GitHub\\Faculdade-Sistemas-Inteligentes-Avancados\\Aula15-03\\iris_cluster.pkl", "wb"))
