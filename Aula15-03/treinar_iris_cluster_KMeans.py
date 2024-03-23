@@ -45,14 +45,14 @@ distancias = []
 for i in range(len(distortions)):
     x = K[i]
     y = distortions[i]
-    numerador = abs((yn-y0)*x - (xn-x0)*y)
-    denominador = math.sqrt((yn-y0)**2)
+    numerador = abs((yn-y0)*x - (xn-x0)*y + xn*y0 - yn*x0)
+    denominador = math.sqrt((yn-y0)**2 + (xn-x0)**2)
     distancias.append(numerador/denominador)
 
 # Maior distância
 n_clusters_otimo = K[distancias.index(np.max(distancias))]
 
-iris_kmeans_model = KMeans(n_clusters = n_clusters_otimo).fit(iris)
+iris_kmeans_model = KMeans(n_clusters = n_clusters_otimo, random_state=42).fit(iris)
 
 from pickle import dump
 dump(iris_kmeans_model, open("C:\\Users\\yann_\\OneDrive\\Documentos\\GitHub\\Faculdade-Sistemas-Inteligentes-Avancados\\Aula15-03\\iris_cluster.pkl", "wb"))
