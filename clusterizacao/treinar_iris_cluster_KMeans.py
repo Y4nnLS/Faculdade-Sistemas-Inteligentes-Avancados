@@ -3,7 +3,7 @@
 
 import pandas as pd
 
-obesity = pd.read_csv('C:\\Users\\Usuário\\Documents\\GitHub\\Faculdade-Sistemas-Inteligentes-Avancados\\Aula15-03\\ObesityDataSet_raw_and_data_sinthetic.csv', sep = ',')
+obesity = pd.read_csv('clusterizacao\ObesityDataSet_raw_and_data_sinthetic.csv', sep = ',')
 
 
 # Excluir o atribudo class
