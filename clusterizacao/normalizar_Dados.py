@@ -1,4 +1,6 @@
 import pandas as pd
+from pickle import dump
+
 dados =pd.read_csv('clusterizacao\ObesityDataSet_raw_and_data_sinthetic.csv', sep=',')
 print(dados.head(5))
 
@@ -23,6 +25,8 @@ dados_normalizados_final_legiveis = modelo_normalizador.inverse_transform(dados_
 dados_normalizados_final_legiveis = pd.DataFrame(data= dados_normalizados_final_legiveis, columns=['Age','Height','Weight','FCVC','NCP','CH2O','FAF','TUE']).join(dados_categoricos_normalizados)
 pd.set_option('display.max_columns', None)
 print(dados_normalizados_final_legiveis)
+
+dump(modelo_normalizador, open("clusterizacao\\normalizador.pkl", "wb"))
 
 
 from sklearn.cluster import KMeans
@@ -66,7 +70,6 @@ n_clusters_otimo = K[distancias.index(np.max(distancias))]
 
 obesity_kmeans_model = KMeans(n_clusters = n_clusters_otimo, random_state=42).fit(dados_normalizados_final)
 
-from pickle import dump
 dump(obesity_kmeans_model, open("clusterizacao\obesity_cluster.pkl", "wb"))
 
 # print(obesity_kmeans_model.cluster_centers_)
