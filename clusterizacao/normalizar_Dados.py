@@ -1,5 +1,5 @@
 import pandas as pd
-dados =pd.read_csv('C:\\Users\\yann_\\OneDrive\\Documentos\\GitHub\\Faculdade-Sistemas-Inteligentes-Avancados\\clusterizacao\\ObesityDataSet_raw_and_data_sinthetic.csv', sep=',')
+dados =pd.read_csv('clusterizacao\ObesityDataSet_raw_and_data_sinthetic.csv', sep=',')
 print(dados.head(5))
 
 dados_numericos = dados.drop(columns=['Gender','family_history_with_overweight', 'FAVC', 'CAEC','SMOKE','SCC','CALC','MTRANS','NObeyesdad' ])
@@ -67,6 +67,6 @@ n_clusters_otimo = K[distancias.index(np.max(distancias))]
 obesity_kmeans_model = KMeans(n_clusters = n_clusters_otimo, random_state=42).fit(dados_normalizados_final)
 
 from pickle import dump
-dump(obesity_kmeans_model, open("C:\\Users\\yann_\\OneDrive\\Documentos\\GitHub\\Faculdade-Sistemas-Inteligentes-Avancados\\clusterizacao\\obesity_cluster.pkl", "wb"))
+dump(obesity_kmeans_model, open("clusterizacao\obesity_cluster.pkl", "wb"))
 
 # print(obesity_kmeans_model.cluster_centers_)
