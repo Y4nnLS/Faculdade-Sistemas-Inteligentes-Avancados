@@ -29,8 +29,5 @@ dados_completos = dados_numericos_normalizados.join(dados_completos, how='left')
 
 print(dados_completos)
 # Exibir o DataFrame resultante
-# print(dados_completos)
-# dados_normalizados_final_legiveis = pd.DataFrame(data= dados_normalizados_final_legiveis, columns=['Age','Height','Weight','FCVC','NCP','CH2O','FAF','TUE']).join(dados_categoricos_normalizados)
-
 print(f"índice do grupo da nova instancia{obesity_clusters_kmeans.predict(dados_completos.values)}")
 print(f"Centroide da nova instancia: {obesity_clusters_kmeans.cluster_centers_[obesity_clusters_kmeans.predict(dados_completos)]}")
