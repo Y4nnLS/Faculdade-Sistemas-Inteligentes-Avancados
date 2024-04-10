@@ -33,5 +33,5 @@ print(f"índice do grupo da nova instancia{obesity_clusters_kmeans.predict(dados
 print(f"Centroide da nova instancia: {obesity_clusters_kmeans.cluster_centers_[obesity_clusters_kmeans.predict(dados_completos)]}")
 
 
-inverse_transform dados_numericos
-from dummies pra categoricos
+# inverse_transform dados_numericos
+# from dummies pra categoricos
