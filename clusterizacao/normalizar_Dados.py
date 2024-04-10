@@ -2,13 +2,17 @@ import pandas as pd
 from pickle import dump
 
 dados =pd.read_csv('clusterizacao\ObesityDataSet_raw_and_data_sinthetic.csv', sep=',')
-print(dados.head(5))
+# print(dados.head(5))
 
 dados_numericos = dados.drop(columns=['Gender','family_history_with_overweight', 'FAVC', 'CAEC','SMOKE','SCC','CALC','MTRANS','NObeyesdad' ])
 dados_categoricos = dados[['Gender','family_history_with_overweight', 'FAVC', 'CAEC','SMOKE','SCC','CALC','MTRANS','NObeyesdad' ]]
 
 dados_categoricos_normalizados = pd.get_dummies(data=dados_categoricos, dtype=int)
-print(dados_categoricos_normalizados)
+# print(dados_categoricos_normalizados)
+
+colunas_categoricas = dados_categoricos_normalizados.columns
+with open("clusterizacao\colunas_categoricas.pkl", "wb") as f:
+    dump(colunas_categoricas, f)
 
 from sklearn import preprocessing
 normalizador = preprocessing.MinMaxScaler()
