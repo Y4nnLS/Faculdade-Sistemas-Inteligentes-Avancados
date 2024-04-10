@@ -1,6 +1,7 @@
 import pandas as pd
 from pickle import load
-
+obesity_clusters_kmeans = load(open("clusterizacao\obesity_cluster.pkl", "rb"))
+normalizador = load(open("clusterizacao/normalizador.pkl", "rb"))
 # Carregar os nomes das colunas categóricas
 colunas_categoricas = load(open("clusterizacao\\colunas_Categoricas.pkl", "rb"))
 # print(colunas_categoricas)
@@ -13,18 +14,23 @@ df_teste = pd.DataFrame([teste_instancia], columns=['Gender', 'Age', 'Height', '
 
 # Converter colunas categóricas em dummy variables
 dados_categoricos_normalizados = pd.get_dummies(data=df_teste[['Gender', 'family_history_with_overweight', 'FAVC', 'CAEC', 'SMOKE', 'SCC', 'CALC', 'MTRANS', 'NObeyesdad']], dtype=int)
-
-# Exibir o DataFrame resultante
-# print(dados_categoricos_normalizados)
-
+dados_numericos = df_teste.drop(columns=['Gender','family_history_with_overweight', 'FAVC', 'CAEC','SMOKE','SCC','CALC','MTRANS','NObeyesdad' ])
+dados_numericos_normalizados = normalizador.transform(dados_numericos)
+dados_numericos_normalizados = pd.DataFrame(data = dados_numericos_normalizados, columns=['Age','Height','Weight','FCVC','NCP','CH2O','FAF','TUE'])
+# print(dados_numericos_normalizados)
 dados_categoricos = pd.DataFrame(columns=colunas_categoricas)
 
 # Concatenar os DataFrames
-dados_completos = dados_categoricos.combine_first(dados_categoricos_normalizados)
-# dados_completos = pd.merge(dados_categoricos,dados_categoricos_normalizados ,how='outer')
-print(dados_completos)
+dados_completos = pd.concat([dados_categoricos, dados_categoricos_normalizados], axis=0)
+# print(dados_completos)
 # Substituir os valores NaN por pd.NA
-dados_completos = dados_completos.where(pd.notna(dados_completos), other=pd.NA)
+dados_completos = dados_completos.where(pd.notna(dados_completos), other=0)
+dados_completos = dados_numericos_normalizados.join(dados_completos, how='left')
 
+print(dados_completos)
 # Exibir o DataFrame resultante
 # print(dados_completos)
+# dados_normalizados_final_legiveis = pd.DataFrame(data= dados_normalizados_final_legiveis, columns=['Age','Height','Weight','FCVC','NCP','CH2O','FAF','TUE']).join(dados_categoricos_normalizados)
+
+print(f"índice do grupo da nova instancia{obesity_clusters_kmeans.predict(dados_completos.values)}")
+print(f"Centroide da nova instancia: {obesity_clusters_kmeans.cluster_centers_[obesity_clusters_kmeans.predict(dados_completos)]}")
