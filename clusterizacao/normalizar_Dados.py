@@ -28,7 +28,7 @@ dados_normalizados_final_legiveis = modelo_normalizador.inverse_transform(dados_
 
 dados_normalizados_final_legiveis = pd.DataFrame(data= dados_normalizados_final_legiveis, columns=['Age','Height','Weight','FCVC','NCP','CH2O','FAF','TUE']).join(dados_categoricos_normalizados)
 pd.set_option('display.max_columns', None)
-print(dados_normalizados_final_legiveis)
+print(f'aaaaaaaaaaaaaaaaaaaaaaaaaa: {dados_normalizados_final_legiveis}')
 
 dump(modelo_normalizador, open("clusterizacao\\normalizador.pkl", "wb"))
 

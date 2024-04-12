@@ -27,11 +27,33 @@ dados_completos = pd.concat([dados_categoricos, dados_categoricos_normalizados],
 dados_completos = dados_completos.where(pd.notna(dados_completos), other=0)
 dados_completos = dados_numericos_normalizados.join(dados_completos, how='left')
 
-print(dados_completos)
+# print(dados_completos)
 # Exibir o DataFrame resultante
-print(f"índice do grupo da nova instancia{obesity_clusters_kmeans.predict(dados_completos.values)}")
-print(f"Centroide da nova instancia: {obesity_clusters_kmeans.cluster_centers_[obesity_clusters_kmeans.predict(dados_completos)]}")
+# print(f"índice do grupo da nova instancia{obesity_clusters_kmeans.predict(dados_completos.values)}")
+# print(f"Centroide da nova instancia: {obesity_clusters_kmeans.cluster_centers_[obesity_clusters_kmeans.predict(dados_completos)]}")
 
 
 # inverse_transform dados_numericos
 # from dummies pra categoricos
+dados_normalizados_final_legiveis = normalizador.inverse_transform(dados_numericos_normalizados)
+dados_categoricos_legiveis = dados_categoricos_normalizados
+dados_normalizados_final_legiveis = pd.DataFrame(data= dados_normalizados_final_legiveis, columns=['Age','Height','Weight','FCVC','NCP','CH2O','FAF','TUE']).join(dados_categoricos_normalizados)
+
+colunas = ['Gender_', 'family_history_with_overweight_', 'FAVC_', 'CAEC_', 'SMOKE_', 'SCC_', 'CALC_', 'MTRANS_', 'NObeyesdad_']
+
+for coluna in dados_categoricos_normalizados.columns:
+    for prefixo in colunas:
+        if coluna.startswith(prefixo):
+            valor = coluna[len(prefixo):].strip()  # Remover o prefixo
+            dados_categoricos_normalizados.rename(columns={coluna: prefixo.rstrip('_')}, inplace=True)  # Remover o '_' do prefixo e renomear a coluna
+            dados_categoricos_normalizados[prefixo.rstrip('_')] = valor  # Adicionar a coluna com o valor correspondente
+            break  # Parar o loop após encontrar o prefixo correspondente
+
+#print(dados_categoricos_normalizados)
+
+df_final = pd.concat([dados_categoricos_normalizados, dados_normalizados_final_legiveis], axis=1)
+
+# Reordenando as colunas para que correspondam à ordem de df_teste
+df_final = df_final[df_teste.columns]
+
+print(df_final)
