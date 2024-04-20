@@ -19,5 +19,6 @@ resampler = SMOTE()
 dados_atribuidos_b, dados_classes_b = resampler.fit_resample(dados_Atribuidos, dados_classes)
 
 print('Frequencia de classes após balanceamento')
+
 classes_count = Counter(dados_classes_b)
 print(classes_count)
